@@ -1,0 +1,9 @@
+---
+- hosts: "*"
+  tasks:
+    - lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%sudo'
+        line: '%sudo ALL=(ALL) NOPSSWD: ALL'
+        validate: 'visudo -cf %s'

@@ -1,0 +1,38 @@
+- hosts: ubuntu
+  become: yes
+  tasks:
+    - name: Install MOTD pre-requisites
+      apt:
+        name: 
+          - update-motd
+          - figlet
+        update_cache: yes
+    - name: copy over core MOTD files - 10-display-name 
+      template: 
+        src: ../MOTD/10-display-name 
+        dest: /etc/update-motd.d/
+        owner: root
+        group: root
+        mode: o+x
+    - name: copy over core MOTD files - 20-sysinfo
+      template: 
+        src: ../MOTD/20-sysinfo
+        dest: /etc/update-motd.d/
+        owner: root
+        group: root
+        mode: o+x
+    - name: copy over core MOTD files - 30-hdd-free
+      template: 
+        src: ../MOTD/30-hdd-free
+        dest: /etc/update-motd.d/
+        owner: root
+        group: root
+        mode: o+x
+    - name: delete unwanted MOTD files
+      file:
+        path: /etc/update-motd.d/10-help-text
+        state: absent
+    - name: delete unwanted MOTD files
+      file:
+        path: /etc/update-motd.d/50-motd-news
+        state: absent

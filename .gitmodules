@@ -4,3 +4,6 @@
 [submodule "raspberry-pi-dramble"]
 	path = raspberry-pi-dramble
 	url = https://github.com/geerlingguy/raspberry-pi-dramble.git
+[submodule "MOTD"]
+	path = MOTD
+	url = https://github.com/jpconstantineau/MOTD.git

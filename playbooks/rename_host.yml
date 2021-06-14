@@ -1,6 +1,6 @@
 -
   name: 'Playbook for change the hostname'
-  hosts: remoteservers
+  hosts: renamehost
   become: True
   become_method: sudo
   tasks:
