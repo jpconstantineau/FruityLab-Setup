@@ -1,27 +1,29 @@
-- hosts: pi-poe
-  become: yes
-  tasks:
-    - lineinfile:
+  - name: setup POE overlay
+    lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtoverlay=rpi-poe'
         line: 'dtoverlay=rpi-poe'
-    - lineinfile:
+  - name: setup POE fan cooling curve 0
+    lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtparam=poe_fan_temp0'
         line: 'dtparam=poe_fan_temp0=52000'
-    - lineinfile:
+  - name: setup POE fan cooling curve 1
+    lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtparam=poe_fan_temp1'
         line: 'dtparam=poe_fan_temp1=58000'
-    - lineinfile:
+  - name: setup POE fan cooling curve 2
+    lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtparam=poe_fan_temp2'
         line: 'dtparam=poe_fan_temp2=64000'
-    - lineinfile:
+  - name: setup POE fan cooling curve 3
+    lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtparam=poe_fan_temp3'

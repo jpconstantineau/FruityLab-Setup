@@ -1,9 +1,3 @@
--
-  name: 'Playbook for change the hostname'
-  hosts: renamehost
-  become: True
-  become_method: sudo
-  tasks:
     - name: "Update Hostnames"
       hostname:
         name: "{{ new_hostname }}"

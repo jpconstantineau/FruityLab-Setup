@@ -1,0 +1,6 @@
+  - name: disable ipv6
+    lineinfile:
+        path: /etc/gai.conf
+        state: present
+        regexp: '^precedence ::ffff:0:0/96'
+        line: 'precedence ::ffff:0:0/96  100'

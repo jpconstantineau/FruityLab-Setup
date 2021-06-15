@@ -1,6 +1,3 @@
-- hosts: kubernetes
-  become: yes
-  tasks:
     - name: copy over core MOTD files - 51-kube-nodes 
       template: 
         src: ../MOTD/51-kube-nodes 

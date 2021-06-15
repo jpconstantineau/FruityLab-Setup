@@ -26,7 +26,10 @@ master
 node
 
 [remoteservers]
-pi4-8gb-dca632ccad7b
+pi4-8gb-dca632ccad7b ansible_host=192.168.1.20 new_hostname=fruity-master1
+pi4-8gb-dca632e99316 ansible_host=192.168.1.21 new_hostname=fruity-worker1
+pi4-8gb-dca632ec7f36 ansible_host=192.168.1.22 new_hostname=fruity-worker2
+pi4-8gb-dca632ec7f12 ansible_host=192.168.1.23 new_hostname=fruity-worker3
 
 [ubuntu]
 i7-vm-rancher ansible_user=pierre
@@ -42,8 +45,9 @@ storage ansible_user=pierre
 -c60m1 ansible_user=pierre
 
 
-[remoteservers]
-pi4-8gb-dca632ccad7b
+[test]
+192.168.1.20 ansible_user=ubuntu new_hostname=fruity-master1
+192.168.1.21 ansible_user=ubuntu new_hostname=fruity-worker1
 
 [master]
 fruity-master1

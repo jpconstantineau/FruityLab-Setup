@@ -1,6 +1,3 @@
-- hosts: ubuntu
-  become: yes
-  tasks:
     - name: copy over core MOTD files - 29-zfs 
       template: 
         src: ../MOTD/29-zfs 

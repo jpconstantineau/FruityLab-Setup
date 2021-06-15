@@ -1,0 +1,5 @@
+    - name: disable wifi
+      systemd:
+        name: wpa_supplicant
+        enabled: no
+        state: stopped
