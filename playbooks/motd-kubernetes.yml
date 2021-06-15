@@ -1,0 +1,17 @@
+- hosts: kubernetes
+  become: yes
+  tasks:
+    - name: copy over core MOTD files - 51-kube-nodes 
+      template: 
+        src: ../MOTD/51-kube-nodes 
+        dest: /etc/update-motd.d/
+        owner: root
+        group: root
+        mode: o+x
+    - name: copy over core MOTD files - 52-kube-pods
+      template: 
+        src: ../MOTD/52-kube-pods
+        dest: /etc/update-motd.d/
+        owner: root
+        group: root
+        mode: o+x

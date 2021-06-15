@@ -28,11 +28,19 @@
         owner: root
         group: root
         mode: o+x
-    - name: delete unwanted MOTD files
+    - name: delete unwanted MOTD files - 10-help-text
       file:
         path: /etc/update-motd.d/10-help-text
         state: absent
-    - name: delete unwanted MOTD files
+    - name: delete unwanted MOTD files - 50-motd-news
       file:
         path: /etc/update-motd.d/50-motd-news
+        state: absent
+    - name: delete unwanted MOTD files - 88-esm-announce 
+      file:
+        path: /etc/update-motd.d/88-esm-announce 
+        state: absent
+    - name: delete unwanted MOTD files - 91-contract-ua-esm-status 
+      file:
+        path: /etc/update-motd.d/91-contract-ua-esm-status 
         state: absent

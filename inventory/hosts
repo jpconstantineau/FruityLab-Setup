@@ -2,10 +2,14 @@ i7-vm-rancher ansible_host=192.168.1.199 ansible_user=pierre new_hostname=ranche
 pi4-400-e45f0130d3ff ansible_host=192.168.1.19 new_hostname=fruity-kb
 pi4-8gb-dca632ccad7b ansible_host=192.168.1.20 new_hostname=fruity-master1
 pi4-8gb-dca632e99316 ansible_host=192.168.1.21 new_hostname=fruity-worker1
-pi4-8gb-bbbbbbbbbbbb ansible_host=192.168.1.22 new_hostname=fruity-worker2
-pi4-8gb-cccccccccccc ansible_host=192.168.1.23 new_hostname=fruity-worker3
+pi4-8gb-dca632ec7f36 ansible_host=192.168.1.22 new_hostname=fruity-worker2
+pi4-8gb-dca632ec7f12 ansible_host=192.168.1.23 new_hostname=fruity-worker3
 
 [motd]
+192.168.1.20 ansible_user=ubuntu
+192.168.1.21 ansible_user=ubuntu
+
+[pi-poe]
 192.168.1.20 ansible_user=ubuntu
 192.168.1.21 ansible_user=ubuntu
 

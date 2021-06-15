@@ -1,0 +1,10 @@
+- hosts: ubuntu
+  become: yes
+  tasks:
+    - name: copy over core MOTD files - 29-zfs 
+      template: 
+        src: ../MOTD/29-zfs 
+        dest: /etc/update-motd.d/
+        owner: root
+        group: root
+        mode: o+x
