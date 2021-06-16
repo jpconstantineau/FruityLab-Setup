@@ -1,0 +1,1 @@
+export KUBECONFIG=../assets/kubectl.yaml

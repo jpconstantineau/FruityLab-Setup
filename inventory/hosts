@@ -45,9 +45,11 @@ storage ansible_user=pierre
 -c60m1 ansible_user=pierre
 
 
-[test]
+[picluster]
 192.168.1.20 ansible_user=ubuntu new_hostname=fruity-master1
 192.168.1.21 ansible_user=ubuntu new_hostname=fruity-worker1
+192.168.1.22 ansible_user=ubuntu new_hostname=fruity-worker2
+192.168.1.23 ansible_user=ubuntu new_hostname=fruity-worker3
 
 [master]
 fruity-master1

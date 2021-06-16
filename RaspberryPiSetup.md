@@ -8,6 +8,9 @@
 * Install K3S
 * Other things...
 
+
+
+
 ## Flash the initial OS
 
 Using Raspberry PI imager, choose Ubuntu 20.04.2 LTS 64 bits (it's in the Other General Purpose OS menu).
@@ -26,31 +29,103 @@ Follow the instructions [here](https://www.raspberrypi.org/documentation/hardwar
 * The green activity LED will blink with a steady pattern and the HDMI display will be green on success.
 * Power off the Raspberry Pi and remove the SD card.
 
-
-
-There’s one more change that’s essential for k3s. Add the following to /boot/cmdline.txt, but make sure that you don’t add new lines.
-cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
-
-
-Copy or create an SSH key
-
-on ansible master:
-```
-ssh-keygen
-ssh-copy-id user@machinename
-```
-
-## Setup Ubuntu
 ## Networking
 
-All nodes on the cluster will have a constant IP address done through DHCP IP Reservation.  On pfsense, this is done in the DHCP Leases page and adding a static mapping to the node.  This is best done one at a time so that it's clear which IP address is given to each node.
+All nodes on the cluster will have a constant IP address done through DHCP IP Reservation.  On pfsense, this is done in the DHCP Leases page and adding a static mapping to the node.  This is best done one at a time so that it's clear which IP address is given to each node.  These instructions assume the following inventory:
+
+```
+[picluster]
+192.168.1.20 ansible_user=ubuntu new_hostname=fruity-master1
+192.168.1.21 ansible_user=ubuntu new_hostname=fruity-worker1
+192.168.1.22 ansible_user=ubuntu new_hostname=fruity-worker2
+192.168.1.23 ansible_user=ubuntu new_hostname=fruity-worker3
+```
+The default hostname of the image is `ubuntu`.  The Ansible setup playbook will rename the host to the `new_hostname` indicated in the inventory.
+
+These have been defined in the `picluster` inventory file.
+
+## forget old ssh keys if the cluster already existed 
+You don't need to do this if this is the first time you create the cluster.  If you get an alarming message indicating tht someone may be impersonating the host, this may be simply because the image generated new keys and you simply need to "forget" the old ones...
+
+```
+ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "192.168.1.20"
+ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "192.168.1.21"
+ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "192.168.1.22"
+ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "192.168.1.23"
+```
+
+## Login and change passwords:
+Since the cards are freshly re-images with the Ubutu image, you need to first log in with the default credentials:
+
+* user: ubuntu
+* password: ubuntu
+
+```
+ssh ubuntu@192.168.1.20
+ssh ubuntu@192.168.1.21
+ssh ubuntu@192.168.1.22
+ssh ubuntu@192.168.1.23
+```
+
+## Create an SSH key for Ansible to be able to log in.
+You don't need to do this if it's already been done and have a key available.
+
+Run this on Ansible master and follow the instrucions (I don't use a passphrase):
+```
+ssh-keygen
+```
+
+## copy ssh key to cluster
+For Ansible to play nice and not need sudo passwords, you need to copy the ssh key from the Ansible master to each of the nodes.  Enter the "new" password you entered a few steps above.
+
+```
+ssh-copy-id ubuntu@192.168.1.20
+ssh-copy-id ubuntu@192.168.1.21
+ssh-copy-id ubuntu@192.168.1.22
+ssh-copy-id ubuntu@192.168.1.23
+```
+
+
+## Setup Pi cluster (Ansible playbook)
+
+An Ansible playbook was created to perform the following steps:
+
+* update apt cache
+* apt upgrade
+* disable wifi
+* disable ipv6
+* rename hosts
+* update message of the day (MOTD)
+* setup poe fan curve
+* reboot
+
+How long the playbook takes will depend on the storage you have. SD cards will be slow. SSDs will be faster.  It will also depend on how many updates are needed.
+
+```
+ansible-playbook playbooks/setup_pi_cluster.yml -i inventory/picluster
+```
+If you run this playbook while `unattended-upgr` is still progressing, you might get a failure on the `apt upgrade` step.
+If this is the case, just re-run te playbook and the failed host will go through all the steps.
+
+
+## Setup k3s Cluster (Ansible playbook)
+
+The k3s-ansible playbook assumes 
 
 
 
-Change hostname
-https://ittroubleshooter.in/change-remove-remote-hostname-using-ansible-playbook/
+```bash
+ansible-playbook k3s-ansible/site.yml -i inventory/picluster
+```
 
-sudo sh -c 'echo "precedence ::ffff:0:0/96  100" >> /etc/gai.conf'
+## Complete post k3s steps
+
+* add MOTD for kubectl get nodes
+* add MOTD for kubectl get pods
+
+
+## Setup Ubuntu
+
 
 
 steps on ubuntu itself:
@@ -70,24 +145,9 @@ rm -fr ~/snap
 sudo apt-mark hold snapd
 sudo apt install update-motd figlet
 
-git clone https://github.com/jpconstantineau/MOTD.git
-cd MOTD
-sudo chown root:root *
-sudo cp 10-display-name /etc/update-motd.d/
-sudo cp 20-sysinfo /etc/update-motd.d/
-sudo cp 51-kube-nodes /etc/update-motd.d/
-sudo cp 52-kube-pods /etc/update-motd.d/
-
-sudo rm /etc/update-motd.d/10-help-text
-sudo rm /etc/update-motd.d/50-motd-news
-sudo rm /etc/update-motd.d/88-esm-announce 
-sudo rm /etc/update-motd.d/91-contract-ua-esm-status 
-
+todo : handler:
 sudo update-motd
 
-
-# no WIFI for the server
-sudo systemctl disable wpa_supplicant.service
 
 
 
@@ -96,8 +156,3 @@ sudo systemctl disable wpa_supplicant.service
 refer [here](https://alexellisuk.medium.com/walk-through-install-kubernetes-to-your-raspberry-pi-in-15-minutes-84a8492dc95a/)
 
 and [here](https://medium.com/icetek/building-a-kubernetes-cluster-on-raspberry-pi-running-ubuntu-server-8fc4edb30963) 
-
-
-
-## Setup K3S
-Run the k3s-ansible playbook

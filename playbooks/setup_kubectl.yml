@@ -1,0 +1,7 @@
+---
+- hosts: master
+  become: yes
+
+  tasks:
+    - import_tasks: tasks/kubeconfig.yml
+    - import_tasks: tasks/motd_kubernetes.yml
