@@ -1,30 +1,71 @@
-  - name: setup POE overlay
+  - name: setup POE overlay - Ubuntu 20
     lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtoverlay=rpi-poe'
         line: 'dtoverlay=rpi-poe'
-  - name: setup POE fan cooling curve 0
+    when: ansible_facts['distribution_major_version'] == "20" 
+  - name: setup POE fan cooling curve 0 - Ubuntu 20
     lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtparam=poe_fan_temp0'
         line: 'dtparam=poe_fan_temp0=52000'
-  - name: setup POE fan cooling curve 1
+    when: ansible_facts['distribution_major_version'] == "20"
+  - name: setup POE fan cooling curve 1 - Ubuntu 20
     lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtparam=poe_fan_temp1'
         line: 'dtparam=poe_fan_temp1=58000'
-  - name: setup POE fan cooling curve 2
+    when: ansible_facts['distribution_major_version'] == "20"
+  - name: setup POE fan cooling curve 2 - Ubuntu 20
     lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtparam=poe_fan_temp2'
         line: 'dtparam=poe_fan_temp2=64000'
-  - name: setup POE fan cooling curve 3
+    when: ansible_facts['distribution_major_version'] == "20"
+  - name: setup POE fan cooling curve 3 - Ubuntu 20
     lineinfile:
         path: /boot/firmware/usercfg.txt
         state: present
         regexp: '^dtparam=poe_fan_temp3'
-        line: 'dtparam=poe_fan_temp3=68000'        
+        line: 'dtparam=poe_fan_temp3=68000'
+    when: ansible_facts['distribution_major_version'] == "20"   
+
+  - name: setup POE overlay - Ubuntu 21
+    lineinfile:
+        path: /boot/firmware/config.txt
+        state: present
+        regexp: '^dtoverlay=rpi-poe'
+        line: 'dtoverlay=rpi-poe'
+    when: ansible_facts['distribution_major_version'] == "21"      
+  - name: setup POE fan cooling curve 0 - Ubuntu 21
+    lineinfile:
+        path: /boot/firmware/config.txt
+        state: present
+        regexp: '^dtparam=poe_fan_temp0'
+        line: 'dtparam=poe_fan_temp0=52000'
+    when: ansible_facts['distribution_major_version'] == "21"
+  - name: setup POE fan cooling curve 1 - Ubuntu 21
+    lineinfile:
+        path: /boot/firmware/config.txt
+        state: present
+        regexp: '^dtparam=poe_fan_temp1'
+        line: 'dtparam=poe_fan_temp1=58000'
+    when: ansible_facts['distribution_major_version'] == "21"
+  - name: setup POE fan cooling curve 2 - Ubuntu 21
+    lineinfile:
+        path: /boot/firmware/config.txt
+        state: present
+        regexp: '^dtparam=poe_fan_temp2'
+        line: 'dtparam=poe_fan_temp2=64000'
+    when: ansible_facts['distribution_major_version'] == "21"
+  - name: setup POE fan cooling curve 3 - Ubuntu 21
+    lineinfile:
+        path: /boot/firmware/config.txt
+        state: present
+        regexp: '^dtparam=poe_fan_temp3'
+        line: 'dtparam=poe_fan_temp3=68000'
+    when: ansible_facts['distribution_major_version'] == "21"

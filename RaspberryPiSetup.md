@@ -13,7 +13,7 @@
 
 ## Flash the initial OS
 
-Using Raspberry PI imager, choose Ubuntu 20.04.2 LTS 64 bits (it's in the Other General Purpose OS menu).
+Using Raspberry PI imager, choose Ubuntu 20.04.2 LTS 64 bits (it's in the Other General Purpose OS menu) if you prefer LTS but I selected 21.04 Server 64 Bits.
 
 
   <img src="https://www.raspberrypi.org/homepage-9df4b/static/md-82e922d180736055661b2b9df176700c.png">
@@ -110,9 +110,8 @@ If this is the case, just re-run te playbook and the failed host will go through
 
 ## Setup k3s Cluster (Ansible playbook)
 
-The k3s-ansible playbook assumes 
-
-
+The k3s-ansible playbook assumes a basic configuration.
+To run it, simply do this:
 
 ```bash
 ansible-playbook k3s-ansible/site.yml -i inventory/picluster
@@ -120,9 +119,16 @@ ansible-playbook k3s-ansible/site.yml -i inventory/picluster
 
 ## Complete post k3s steps
 
+Once k3s is installed you need to get the kubeconfig file as well as setup some basic MOTD message for the master:
+
 * add MOTD for kubectl get nodes
 * add MOTD for kubectl get pods
 
+Run this playbook:
+
+```
+ansible-playbook playbooks/setup_kubectl.yml -i inventory/picluster
+```
 
 ## Setup Ubuntu
 

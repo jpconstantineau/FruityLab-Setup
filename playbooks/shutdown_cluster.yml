@@ -1,7 +1,7 @@
 ---
-- hosts: test
+- hosts: picluster
   become: true
   tasks:
   - name: shutdown hosts
-    command: /sbin/shutdown -h now
+    command: /sbin/shutdown 
     when: ansible_facts['os_family'] == "Debian"
