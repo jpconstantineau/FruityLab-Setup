@@ -130,35 +130,9 @@ Run this playbook:
 ansible-playbook playbooks/setup_kubectl.yml -i inventory/picluster
 ```
 
-## Setup Ubuntu
+## todo 
 
+* handler: sudo update-motd
+* sudo rm -rf /etc/cloud/ && sudo rm -rf /var/lib/cloud/
+* sudo apt-mark hold snapd
 
-
-steps on ubuntu itself:
-
-sudo apt update
-sudo apt upgrade -y
-sudo apt-get purge cloud-init
-sudo rm -rf /etc/cloud/ && sudo rm -rf /var/lib/cloud/
-sudo apt-get autoremove && apt-get autoclean
-
-
-
-sudo apt autoremove --purge snapd gnome-software-plugin-snap
-sudo rm -rf /var/cache/snapd/
-rm -fr ~/snap
-
-sudo apt-mark hold snapd
-sudo apt install update-motd figlet
-
-todo : handler:
-sudo update-motd
-
-
-
-
-## Setup Ubuntu
-
-refer [here](https://alexellisuk.medium.com/walk-through-install-kubernetes-to-your-raspberry-pi-in-15-minutes-84a8492dc95a/)
-
-and [here](https://medium.com/icetek/building-a-kubernetes-cluster-on-raspberry-pi-running-ubuntu-server-8fc4edb30963) 
