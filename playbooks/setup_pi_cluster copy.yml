@@ -9,8 +9,9 @@
   tasks:
     - import_tasks: tasks/apt_upgrade.yml
     - import_tasks: tasks/apt_remove.yml
-    - import_tasks: tasks/rename_host.yml
     - import_tasks: tasks/disable_wifi.yml
+    - import_tasks: tasks/disable_ipv6.yml
+    - import_tasks: tasks/rename_host.yml
     - import_tasks: tasks/motd_all.yml
     - import_tasks: tasks/raspberry_poe.yml
     - import_tasks: tasks/reboot.yml

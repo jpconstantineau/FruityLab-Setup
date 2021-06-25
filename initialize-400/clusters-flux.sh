@@ -1,5 +1,5 @@
 export GITHUB_TOKEN=$(cat ../assets/gh | grep token | awk '{print $2}')
-export KUBECONFIG=../assets/kubectl.yaml
+export KUBECONFIG=../assets/k3s.yaml
 
 
  flux create kustomization --source flux-system --path "./cluster/internal/" --prune true --validation client \
