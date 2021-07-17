@@ -1,8 +1,9 @@
     - name: Install MOTD pre-requisites
       apt:
         name: 
-          - update-motd
-          - figlet
+          #- update-motd
+          #- figlet
+          - open-iscsi
         update_cache: yes
     - name: copy over core MOTD files - 10-display-name 
       template: 

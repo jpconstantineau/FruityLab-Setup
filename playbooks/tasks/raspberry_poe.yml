@@ -69,3 +69,40 @@
         regexp: '^dtparam=poe_fan_temp3'
         line: 'dtparam=poe_fan_temp3=68000'
     when: ansible_facts['distribution_major_version'] == "21"
+
+
+  - name: setup POE overlay - Raspberry PI OS 10
+    lineinfile:
+        path: /boot/config.txt
+        state: present
+        regexp: '^dtoverlay=rpi-poe'
+        line: 'dtoverlay=rpi-poe'
+    when: ansible_facts['distribution_major_version'] == "10" 
+  - name: setup POE fan cooling curve 0 - Raspberry PI OS 10
+    lineinfile:
+        path: /boot/config.txt
+        state: present
+        regexp: '^dtparam=poe_fan_temp0'
+        line: 'dtparam=poe_fan_temp0=65000,poe_fan_temp0_hyst=5000'
+    when: ansible_facts['distribution_major_version'] == "10"
+  - name: setup POE fan cooling curve 1 - Raspberry PI OS 10
+    lineinfile:
+        path: /boot/config.txt
+        state: present
+        regexp: '^dtparam=poe_fan_temp1'
+        line: 'dtparam=poe_fan_temp1=70000,poe_fan_temp1_hyst=5000'
+    when: ansible_facts['distribution_major_version'] == "10"
+  - name: setup POE fan cooling curve 2 - Raspberry PI OS 10
+    lineinfile:
+        path: /boot/config.txt
+        state: present
+        regexp: '^dtparam=poe_fan_temp2'
+        line: 'dtparam=poe_fan_temp2=75000,poe_fan_temp2_hyst=5000'
+    when: ansible_facts['distribution_major_version'] == "10"
+  - name: setup POE fan cooling curve 3 - Raspberry PI OS 10
+    lineinfile:
+        path: /boot/config.txt
+        state: present
+        regexp: '^dtparam=poe_fan_temp3'
+        line: 'dtparam=poe_fan_temp3=80000,poe_fan_temp3_hyst=2000'
+    when: ansible_facts['distribution_major_version'] == "10"   

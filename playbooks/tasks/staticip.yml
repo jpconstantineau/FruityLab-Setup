@@ -1,0 +1,11 @@
+  - name: setup static ip
+    template: 
+        src: ../config/00-netplan-static-ip-init.yaml.j2
+        dest: /etc/netplan/00-netplan-static-ip-init.yaml
+        owner: root
+        group: root
+        mode: 777
+  - name: delete 50-cloud-init.yaml
+    file:
+      path: /etc/netplan/50-cloud-init.yaml
+      state: absent

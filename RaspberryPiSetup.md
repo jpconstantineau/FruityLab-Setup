@@ -103,6 +103,10 @@ How long the playbook takes will depend on the storage you have. SD cards will b
 
 ```
 ansible-playbook playbooks/setup_pi_cluster.yml -i inventory/picluster
+
+ansible-playbook playbooks/setup_pios_cluster.yml -i inventory/picluster
+
+
 ```
 If you run this playbook while `unattended-upgr` is still progressing, you might get a failure on the `apt upgrade` step.
 If this is the case, just re-run te playbook and the failed host will go through all the steps.

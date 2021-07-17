@@ -1,0 +1,7 @@
+  - name: replace resolv.conf
+    template: 
+        src: ../config/resolv.conf
+        dest: /etc/resolv.kube.conf
+        owner: root
+        group: root
+        mode: 777

@@ -1,0 +1,2 @@
+[picluster]
+192.168.1.24 ansible_user=ubuntu new_hostname=fruity-master4
