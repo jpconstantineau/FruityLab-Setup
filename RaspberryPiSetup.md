@@ -13,17 +13,18 @@
 
 ## Flash the initial OS
 
-Using Raspberry PI imager, choose Ubuntu 20.04.2 LTS 64 bits (it's in the Other General Purpose OS menu) if you prefer LTS but I selected 21.04 Server 64 Bits.
+Download the latest RaspiOS Lite ARM64 image from the Raspberry PI [download site](https://downloads.raspberrypi.org/raspios_lite_arm64/images/)
+
+Using Raspberry PI imager, burn the image to your ssd or sd card.
 
 
   <img src="https://www.raspberrypi.org/homepage-9df4b/static/md-82e922d180736055661b2b9df176700c.png">
 
-You will need to burn both a SD card and the SSD you want to boot from. (for some reason, you need to have both installed on the PI for it to boot wih Ubuntu 20.04.2 LTS 64 bit)
-
-While you are at it, burn yourself an SD card with the bootloader update for USB boot.  In the next section, we will  change the boot order so that each node can boot from USB.
-Follow the instructions [here](https://www.raspberrypi.org/documentation/hardware/raspberrypi/booteeprom.md#imager)
+You need to select the image manually.  In my case, I used **2021-05-07-raspios-buster-arm64-lite.zip**
 
 ## Setup the PI for USB Boot
+
+If you have an older Raspberry PI 4, you need to update the bootloader to be able to boot from USB (SSD)
 
 * Boot the Raspberry Pi with the USB Bootloder image and wait for at least 10 seconds.
 * The green activity LED will blink with a steady pattern and the HDMI display will be green on success.
@@ -35,12 +36,12 @@ All nodes on the cluster will have a constant IP address done through DHCP IP Re
 
 ```
 [picluster]
-192.168.1.20 ansible_user=ubuntu new_hostname=fruity-master1
-192.168.1.21 ansible_user=ubuntu new_hostname=fruity-worker1
-192.168.1.22 ansible_user=ubuntu new_hostname=fruity-worker2
-192.168.1.23 ansible_user=ubuntu new_hostname=fruity-worker3
+192.168.1.20 ansible_user=pi new_hostname=fruity-master1
+192.168.1.21 ansible_user=pi new_hostname=fruity-worker1
+192.168.1.22 ansible_user=pi new_hostname=fruity-worker2
+192.168.1.23 ansible_user=pi new_hostname=fruity-worker3
 ```
-The default hostname of the image is `ubuntu`.  The Ansible setup playbook will rename the host to the `new_hostname` indicated in the inventory.
+The default hostname of the ubuntu image is `ubuntu`.  The Ansible setup playbook will rename the host to the `new_hostname` indicated in the inventory.
 
 These have been defined in the `picluster` inventory file.
 
@@ -55,16 +56,16 @@ ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "192.168.1.23"
 ```
 
 ## Login and change passwords:
-Since the cards are freshly re-images with the Ubutu image, you need to first log in with the default credentials:
+Since the cards are freshly re-images with the raspios image, you need to first log in with the default credentials:
 
-* user: ubuntu
-* password: ubuntu
+* user: pi
+* password: raspberry
 
 ```
-ssh ubuntu@192.168.1.20
-ssh ubuntu@192.168.1.21
-ssh ubuntu@192.168.1.22
-ssh ubuntu@192.168.1.23
+ssh pi@192.168.1.20
+ssh pi@192.168.1.21
+ssh pi@192.168.1.22
+ssh pi@192.168.1.23
 ```
 
 ## Create an SSH key for Ansible to be able to log in.
@@ -79,10 +80,10 @@ ssh-keygen
 For Ansible to play nice and not need sudo passwords, you need to copy the ssh key from the Ansible master to each of the nodes.  Enter the "new" password you entered a few steps above.
 
 ```
-ssh-copy-id ubuntu@192.168.1.20
-ssh-copy-id ubuntu@192.168.1.21
-ssh-copy-id ubuntu@192.168.1.22
-ssh-copy-id ubuntu@192.168.1.23
+ssh-copy-id pi@192.168.1.20
+ssh-copy-id pi@192.168.1.21
+ssh-copy-id pi@192.168.1.22
+ssh-copy-id pi@192.168.1.23
 ```
 
 
