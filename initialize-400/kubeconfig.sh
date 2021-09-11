@@ -1,1 +1,1 @@
-export KUBECONFIG=./assets/k3s.yaml
+export KUBECONFIG=./assets/k3s-production.yaml

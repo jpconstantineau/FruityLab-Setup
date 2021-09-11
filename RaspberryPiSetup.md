@@ -22,6 +22,8 @@ Using Raspberry PI imager, burn the image to your ssd or sd card.
 
 You need to select the image manually.  In my case, I used **2021-05-07-raspios-buster-arm64-lite.zip**
 
+Note that this image does not havve ssh enabled.  you need to add an empty ssh file into the boot partition
+
 ## Setup the PI for USB Boot
 
 If you have an older Raspberry PI 4, you need to update the bootloader to be able to boot from USB (SSD)
@@ -103,7 +105,7 @@ An Ansible playbook was created to perform the following steps:
 How long the playbook takes will depend on the storage you have. SD cards will be slow. SSDs will be faster.  It will also depend on how many updates are needed.
 
 ```
-ansible-playbook playbooks/setup_pi_cluster.yml -i inventory/picluster
+ansible-playbook playbooks/setup_pi_cluster.yml -i inventory/production-cluster
 
 
 ```
@@ -117,7 +119,7 @@ The k3s-ansible playbook assumes a basic configuration.  Swich over to the k3s-h
 To run it, simply do this:
 
 ```bash
-ansible-playbook k3s-ansible/site.yml -i inventory/picluster
+ansible-playbook k3s-ansible/site.yml -i inventory/production-cluster
 ```
 
 ## Complete post k3s steps
@@ -130,7 +132,7 @@ Once k3s is installed you need to get the kubeconfig file as well as setup some 
 Run this playbook:
 
 ```
-ansible-playbook playbooks/setup_kubectl.yml -i inventory/picluster
+ansible-playbook playbooks/setup_kubectl.yml -i inventory/production-cluster
 ```
 
 ## todo 
