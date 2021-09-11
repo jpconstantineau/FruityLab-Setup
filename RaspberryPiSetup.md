@@ -105,8 +105,6 @@ How long the playbook takes will depend on the storage you have. SD cards will b
 ```
 ansible-playbook playbooks/setup_pi_cluster.yml -i inventory/picluster
 
-ansible-playbook playbooks/setup_pios_cluster.yml -i inventory/picluster
-
 
 ```
 If you run this playbook while `unattended-upgr` is still progressing, you might get a failure on the `apt upgrade` step.
@@ -115,7 +113,7 @@ If this is the case, just re-run te playbook and the failed host will go through
 
 ## Setup k3s Cluster (Ansible playbook)
 
-The k3s-ansible playbook assumes a basic configuration.
+The k3s-ansible playbook assumes a basic configuration.  Swich over to the k3s-ha branch to make sure you can have HA (3 masters) configuration.
 To run it, simply do this:
 
 ```bash
@@ -141,3 +139,4 @@ ansible-playbook playbooks/setup_kubectl.yml -i inventory/picluster
 * sudo rm -rf /etc/cloud/ && sudo rm -rf /var/lib/cloud/
 * sudo apt-mark hold snapd
 
+kubectl run -i --tty authelia --image=authelia/authelia:latest -- authelia hash-password 'yourpassword'
