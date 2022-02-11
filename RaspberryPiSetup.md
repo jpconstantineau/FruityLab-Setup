@@ -137,7 +137,7 @@ ansible-playbook playbooks/setup_kubectl.yml -i inventory/production-cluster
 
 ## update OS
 ```
-ansible-playbook playbooks/os_upgrade.yml -i inventory/production-cluster
+ansible-playbook playbooks/os_update.yml -i inventory/production-cluster
 ```
 
 
